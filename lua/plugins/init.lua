@@ -450,10 +450,6 @@ return {
         },
         context_char = "▏",
         context_start_char = "▏",
-        -- context_highlight_list = {
-        --   "IndentBlanklineContextChar",
-        --   "IndentBlanklineContextStart",
-        -- },
         space_char_blankline = " ",
         show_trailing_blankline_indent = false,
         show_first_indent_level = false,
@@ -475,28 +471,7 @@ return {
       require("mini.indentscope").setup(opts)
     end,
   },
-  -- {
-  --   "luckasRanarison/tailwind-tools.nvim",
-  --   name = "tailwind-tools",
-  --   build = ":UpdateRemotePlugins",
-  --   dependencies = {
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "nvim-telescope/telescope.nvim",
-  --     "neovim/nvim-lspconfig",
-  --   },
-  --   opts = {
-  --     autocompletion = {
-  --       complete = true,
-  --     },
-  --     require("cmp").setup {
-  --       sources = {
-  --         { name = "buffer" }, -- Для автозавершения из буфера
-  --         { name = "path" }, -- Для автозавершения путей
-  --         -- другие источники при необходимости
-  --       },
-  --     },
-  --   },
-  -- },
+
   {
     "themaxmarchuk/tailwindcss-colors.nvim",
     -- load only on require("tailwindcss-colors")
