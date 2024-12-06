@@ -178,6 +178,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
     opts = {
       ensure_installed = {
         "vim",
@@ -197,6 +198,10 @@ return {
         "markdown",
         "markdown_inline",
       },
+    },
+    highlight = {
+      enable = true, -- Включить подсветку
+      additional_vim_regex_highlighting = true,
     },
   },
   {
@@ -279,19 +284,6 @@ return {
       transparent = true,
     },
   },
-  -- {
-  --   "sql-formatter-org/sql-formatter",
-  --   lazy = false,
-  --   priority = 1000,
-  --   build = "npm install",
-  --   opts = {
-  --     tab_width = 2,
-  --     use_tabs = false,
-  --   },
-  --   config = function(_, opts)
-  --     require("sql-formatter").setup(opts)
-  --   end,
-  -- },
   -- {
   --   "tpope/vim-dadbod-ui",
   --   lazy = false,
@@ -436,6 +428,7 @@ return {
   { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "nvim-tree/nvim-web-devicons" },
   {
     "lukas-reineke/indent-blankline.nvim",
+    version = "2.20.0",
     event = "VeryLazy",
     main = "ibl",
     opts = {},
@@ -446,6 +439,25 @@ return {
         show_current_context = true,
         show_current_context_start = true,
         buftype_exclude = { "terminal" },
+        highlight = {
+          "RainbowRed",
+          "RainbowYellow",
+          "RainbowBlue",
+          "RainbowOrange",
+          "RainbowGreen",
+          "RainbowViolet",
+          "RainbowCyan",
+        },
+        context_char = "▏",
+        context_start_char = "▏",
+        -- context_highlight_list = {
+        --   "IndentBlanklineContextChar",
+        --   "IndentBlanklineContextStart",
+        -- },
+        space_char_blankline = " ",
+        show_trailing_blankline_indent = false,
+        show_first_indent_level = false,
+        show_end_of_line = false,
       }
     end,
   },
@@ -453,7 +465,7 @@ return {
   -- Indent animations
   {
     "echasnovski/mini.indentscope",
-    version = "*",
+    version = "2.0.0",
     event = "BufReadPre",
     opts = {
       symbol = "│",
@@ -489,10 +501,23 @@ return {
     "themaxmarchuk/tailwindcss-colors.nvim",
     -- load only on require("tailwindcss-colors")
     module = "tailwindcss-colors",
-    -- run the setup function after plugin is loaded
-    config = function()
-      -- pass config options here (or nothing to use defaults)
-      require("tailwindcss-colors").setup()
+    build = function()
+      require("tailwindcss-colors").install()
+    end,
+    opts = {
+      autocompletion = {
+        complete = true,
+      },
+      require("cmp").setup {
+        sources = {
+          { name = "buffer" }, -- Для автозавершения из буфера
+          { name = "path" }, -- Для автозавершения путей
+          -- другие источники при необходимости
+        },
+      },
+    },
+    config = function(_, opts)
+      require("tailwindcss-colors").setup(opts)
     end,
   },
 }

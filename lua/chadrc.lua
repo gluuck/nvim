@@ -8,7 +8,7 @@ local M = {}
 M.base46 = {
   theme = "gatekeeper",
 
-  transparency = false,
+  transparency = true,
   hl_override = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
@@ -57,12 +57,12 @@ M.base46 = {
     PmenuSel = { bg = "#ffffff" },
     PmenuSbar = { bg = "#ffffff" },
     PmenuThumb = { bg = "#ffffff" },
-    SignColumn = { bg = "#ffffff" },
-    Normal = { bg = { "black", 2 } },
-    NormalFloat = { bg = { "black", 2 } },
-    ColorColumn = { bg = { "black", 2 } },
-    LineNr = { bg = { "black", 2 } },
-    CursorLine = { bg = { "black", 2 } },
+    SignColumn = { bg = "#0f0f0f" },
+    Normal = { bg = { "black", 1 } },
+    NormalFloat = { bg = { "black", 1 } },
+    ColorColumn = { bg = { "black", 1 } },
+    LineNr = { bg = { "black", 1 } },
+    CursorLine = { bg = { "black", 1 } },
     filter = {
       dotfiles = true, -- Делаем скрытые файлы видимыми
     },

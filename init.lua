@@ -2,7 +2,8 @@ vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 vim.opt.relativenumber = true
 vim.opt.termguicolors = true
-
+vim.o.showmatch = true -- Подсвечивать соответствующие скобки при нажатии на них
+vim.o.matchtime = 2
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
