@@ -4,7 +4,7 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 
 -- EXAMPLE
-local servers = { "html", "cssls", "ruby_lsp", "rubocop", "tailwindcss" }
+local servers = { "html", "cssls", "ruby_lsp", "rubocop", "tailwindcss", "ts_ls", "eslint" }
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config
@@ -45,5 +45,23 @@ lspconfig.tailwindcss.setup {
     "css",
     "less",
     "html",
+  },
+  init_options = {
+    userLanguages = {
+      erb = "html",
+    },
+  },
+  settings = {
+    tailwindCSS = {
+      classAttributes = { "class", "className", "classlist", "classList", "ngClass" },
+      lint = {
+        cssConflict = "warning",
+        invalidApply = "error",
+        invalidConfigPath = "error",
+        invalidScreen = "error",
+        recommendedVariantOrder = "warning",
+      },
+      validate = true,
+    },
   },
 }
