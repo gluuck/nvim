@@ -8,7 +8,7 @@ require("lint").linters_by_ft = {
   html = { "tidy" },
   json = { "jsonlint" },
   yaml = { "yamllint" },
-  ruby = { "rubocop" },
+  ruby = { "semgrep" },
 }
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
