@@ -189,11 +189,6 @@ return {
       },
     },
   },
-  {
-    "folke/twilight.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
@@ -443,34 +438,13 @@ return {
     },
   },
   { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "nvim-tree/nvim-web-devicons" },
-  -- {
-  --   "lukas-reineke/indent-blankline.nvim",
-  --   version = "2.20.0",
-  --   event = "VeryLazy",
-  --   main = "ibl",
-  --   opts = {
-  --     char = "▏",
-  --     use_treesitter = true,
-  --     show_current_context = true,
-  --     show_current_context_start = true,
-  --     buftype_exclude = { "terminal" },
-  --     highlight = {
-  --       "RainbowRed",
-  --       "RainbowYellow",
-  --       "RainbowBlue",
-  --       "RainbowOrange",
-  --       "RainbowGreen",
-  --       "RainbowViolet",
-  --       "RainbowCyan",
-  --     },
-  --     context_char = "▏",
-  --     context_start_char = "▏",
-  --     space_char_blankline = " ",
-  --     show_trailing_blankline_indent = false,
-  --     show_first_indent_level = false,
-  --     show_end_of_line = false,
-  --   },
-  -- },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    version = "2.20.0",
+    event = "VeryLazy",
+    opts = {},
+  },
 
   -- Indent animations
   {
