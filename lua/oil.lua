@@ -5,6 +5,6 @@ return {
     show_hidden = true,
   },
   keymaps = {
-    ["<CR>"] = "open_with_window_picker",
+    ["-"] = "open_with_window_picker",
   },
 }

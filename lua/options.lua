@@ -7,7 +7,10 @@ end
 
 local o = vim.o
 local opt = vim.opt
-o.cursorlineopt ='both' -- to enable cursorline!
+local api = vim.api
+
+o.clipboard = "unnamedplus"
+o.cursorlineopt = "both" -- to enable cursorline!
 opt.relativenumber = true
 opt.termguicolors = true
 o.showmatch = true -- Подсвечивать соответствующие скобки при нажатии на них
@@ -35,3 +38,9 @@ o.timeoutlen = 300
 
 -- Set completeopt to have a better completion experience
 o.completeopt = "menuone,noselect"
+
+api.nvim_command "set diffopt+=iwhite"
+api.nvim_command "set diffopt+=internal,algorithm:patience"
+api.nvim_create_autocmd("FocusLost", { command = "silent! wa" })
+api.nvim_create_autocmd("BufLeave", { command = "silent! wa" })
+

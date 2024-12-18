@@ -1,6 +1,6 @@
 local M = {}
 M.base46 = {
-  theme = "dracula",
+  theme = "gatekeeper",
 
   transparency = false,
   hl_override = {

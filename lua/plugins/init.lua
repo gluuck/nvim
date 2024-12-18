@@ -173,7 +173,27 @@ return {
     event = "BufWritePre", -- uncomment for format on save
     opts = require "configs.conform",
   },
-
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {
+      plugins = {
+        spelling = {
+          enabled = true,
+          suggestions = 20,
+        },
+      },
+    },
+  },
+  {
+    "folke/twilight.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",

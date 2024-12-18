@@ -80,5 +80,4 @@ map("i", "jj", "<ESC>")
 map("i", "<C-g>", function()
   return vim.fn["codeium#Accept"]()
 end, { expr = true })
-
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
