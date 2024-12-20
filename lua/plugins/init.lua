@@ -440,10 +440,14 @@ return {
   { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "nvim-tree/nvim-web-devicons" },
   {
     "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
     version = "2.20.0",
     event = "VeryLazy",
-    opts = {},
+    config = function()
+      require("indent_blankline").setup {
+        show_current_context = true,
+        show_current_context_start = true,
+      }
+    end,
   },
 
   -- Indent animations
