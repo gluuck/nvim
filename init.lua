@@ -23,7 +23,6 @@ require("lazy").setup({
   },
 
   { import = "plugins" },
-  { import = "configs.null-ls" },
 }, lazy_config)
 
 -- load theme
@@ -37,3 +36,16 @@ require "nvchad.themes"
 vim.schedule(function()
   require "mappings"
 end)
+-- Enable null-ls
+require("null-ls").setup({
+  sources = {
+    require("null-ls").builtins.formatting.stylua,
+    require("null-ls").builtins.diagnostics.eslint_d,
+    require("null-ls").builtins.completion.spell,
+    require("null-ls").builtins.formatting.prettierd,
+    require("null-ls").builtins.formatting.rubocop,
+    require("null-ls").builtins.diagnostics.rubocop,
+    require("null-ls").builtins.diagnostics.golangci_lint,
+  },
+})
+
