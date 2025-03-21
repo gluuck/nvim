@@ -56,7 +56,6 @@ return {
   { "nvim-neotest/nvim-nio" },
   { "nvim-lua/plenary.nvim" },
   { "nvim-treesitter/nvim-treesitter" },
-  { "neovim/nvim-lspconfig" },
   { "williamboman/nvim-lsp-installer" },
   {
     "hrsh7th/nvim-cmp",
