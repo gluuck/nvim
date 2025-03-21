@@ -10,6 +10,7 @@ local options = {
     typescriptreact = { "prettierd" },
     erb = { "html_beautify" },
     sql = { "sql_formatter" },
+    go = { "gofmt" },
   },
   formaters = {
     html_beautify = {
@@ -58,14 +59,22 @@ local options = {
     rubyfmt = {
       command = "rubyfmt",
       args = { "--stdin", "--fix", "--verbose", "--format", "--singlequote" },
-          
+
     },
+    rufo = {
+      command = "rufo",
+      args = { "--stdin", "--fix", "--verbose", "--format", "--singlequote" },
+    },
+    gofmt = {
+      command = "gofmt",
+      args = { "-w", "$FILENAME" },
+    }
     -- standardrb = { args = { "--stdin", "--fix", "--verbose", "--format", "--singlequote" } },
   },
 
   format_on_save = {
     -- These options will be passed to conform.format()
-    timeout_ms = 3000,
+    timeout_ms = 5000,
     lsp_fallback = true,
   },
 }

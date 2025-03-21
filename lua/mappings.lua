@@ -73,6 +73,9 @@ end, { desc = "Toogle Terminal Horizontal" })
 map("t", "<C-f>", function()
   require("nvchad.term").toggle { pos = "float" }
 end, { desc = "Toogle Terminal Float" })
+map("n", "<C-t>", function()
+  require("minty.shades").open()
+end, { desc = "Toggle Shades" })
 
 -- Basic
 
