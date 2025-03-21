@@ -1,7 +1,7 @@
 local M = {}
 local cmp_ui = require("nvconfig").ui.cmp
 M.base46 = {
-  theme = "bearded-arc",
+  theme = "eldritch",
 
   transparency = false,
   hl_override = {
