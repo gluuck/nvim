@@ -4,23 +4,44 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 
 -- EXAMPLE
-local servers = { "html", "cssls", "solargraph", "rubocop", "tailwindcss", "ts_ls", "eslint" }
+-- local servers = { "html", "cssls", "rubocop", "ruby_lsp", "tailwindcss", "ts_ls", "eslint", "gopls" }
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  }
-end
+-- for _, lsp in ipairs(servers) do
+--   lspconfig[lsp].setup {
+--     on_attach = nvlsp.on_attach,
+--     on_init = nvlsp.on_init,
+--     capabilities = nvlsp.capabilities,
+--   }
+-- end
 
-lspconfig.solargraph.setup {
+lspconfig.gopls.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+    },
+  },
+}
+
+lspconfig.ruby_lsp.setup {
+  command = { "bundle", "exec", "ruby-lsp" },
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
 }
+
+-- lspconfig.solargraph.setup {
+--   on_attach = nvlsp.on_attach,
+--   on_init = nvlsp.on_init,
+--   capabilities = nvlsp.capabilities,
+-- }
 
 lspconfig.rubocop.setup {
   on_attach = nvlsp.on_attach,

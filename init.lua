@@ -1,7 +1,6 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
-
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
@@ -32,20 +31,7 @@ dofile(vim.g.base46_cache .. "statusline")
 require "options"
 require "nvchad.autocmds"
 require "nvchad.themes"
-
+require "configs.null-ls"
 vim.schedule(function()
   require "mappings"
 end)
--- Enable null-ls
-require("null-ls").setup({
-  sources = {
-    require("null-ls").builtins.formatting.stylua,
-    require("null-ls").builtins.diagnostics.eslint_d,
-    require("null-ls").builtins.completion.spell,
-    require("null-ls").builtins.formatting.prettierd,
-    require("null-ls").builtins.formatting.rubocop,
-    require("null-ls").builtins.diagnostics.rubocop,
-    require("null-ls").builtins.diagnostics.golangci_lint,
-  },
-})
-

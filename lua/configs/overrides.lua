@@ -30,6 +30,7 @@ M.treesitter = {
     enable_autocmd = false,
   },
   dotfiles = true,
+  endwise = { enabled = true },
 }
 
 M.mason = {
