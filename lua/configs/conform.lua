@@ -13,8 +13,14 @@ local options = {
     go = { "gofmt" },
     yaml = { "prettierd" },
     yml = { "prettierd" },
+    slim = { "rubocop_slim" },
   },
   formaters = {
+    rubocop_slim = {
+      command = "rubocop",
+      args = { "-A", "--stdin", "%" },
+      filetypes = { "ruby", "slim" },
+    },
     --   html_beautify = {
     --     command = "html-beautify",
     --     args = { "--type", "html", "erb", "slim", "--indent-size", "2" },
@@ -81,7 +87,7 @@ local options = {
   --
   format_on_save = {
     -- These options will be passed to conform.format()
-    timeout_ms = 3000,
+    timeout_ms = 5000,
     lsp_fallback = true,
   },
 }

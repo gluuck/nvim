@@ -54,7 +54,11 @@ return {
   { "Shougo/neco-vim" },
   { "Shougo/neco-syntax" },
   { "Keithbsmiley/rspec.vim" },
-  { "jose-elias-alvarez/null-ls.nvim" },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    event = "BufWritePre",
+  },
+  { "r7kamura/rubocop-slim" },
   { "nvim-neotest/nvim-nio" },
   { "nvim-lua/plenary.nvim" },
   { "nvim-treesitter/nvim-treesitter" },
@@ -68,16 +72,13 @@ return {
       "hrsh7th/cmp-cmdline",
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
-      "hrsh7th/cmp-emoji",
     },
     dependencies = {
-      "hrsh7th/cmp-emoji",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
     },
     opts = function(_, opts)
       opts.sources = opts.sources or {}
-      table.insert(opts.sources, { name = "emoji" })
       table.insert(opts.sources, { name = "path" })
       table.insert(opts.sources, { name = "buffer" })
     end,

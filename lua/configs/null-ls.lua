@@ -1,15 +1,28 @@
 local null_ls = require "null-ls"
-
 local b = null_ls.builtins
-
+local helpers = require "null-ls.helpers"
 null_ls.setup {
   debug = true,
   sources = {
-    -- webdev stuff
+    helpers.make_builtin {
+      method = null_ls.methods.FORMATTING,
+      filetypes = { "slim" },
+      generator_opts = {
+        command = "slimrb",
+        args = { "--format", "-" },
+        to_stdin = true,
+      },
+      factory = helpers.formatter_factory,
+    },
     b.formatting.deno_fmt,
     b.formatting.prettierd.with {
       filetypes = { "html", "markdown", "css", "scss", "json", "javascript", "yaml", "yml" },
     },
+    b.formatting.stylua.with { filetypes = { "lua" } },
+    b.formatting.rubocop.with { filetypes = { "ruby" } },
+    b.formatting.erb_format.with { filetypes = { "eruby" } },
+
+    b.formatting.gofmt.with { filetypes = { "go" } },
 
     -- Lua
     b.formatting.stylua,
