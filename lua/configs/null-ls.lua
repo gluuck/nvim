@@ -8,15 +8,16 @@ null_ls.setup {
       method = null_ls.methods.FORMATTING,
       filetypes = { "slim" },
       generator_opts = {
-        command = "slimrb",
+        command = "erb-format",
         args = { "--format", "-" },
         to_stdin = true,
       },
       factory = helpers.formatter_factory,
     },
     b.formatting.deno_fmt,
+    b.formatting.yamlfmt.with { filetypes = { "yaml" } },
     b.formatting.prettierd.with {
-      filetypes = { "html", "markdown", "css", "scss", "json", "javascript", "yaml", "yml" },
+      filetypes = { "html", "markdown", "css", "scss", "json", "javascript" },
     },
     b.formatting.stylua.with { filetypes = { "lua" } },
     b.formatting.rubocop.with { filetypes = { "ruby" } },

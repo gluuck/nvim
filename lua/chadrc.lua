@@ -1,7 +1,7 @@
 local M = {}
 local cmp_ui = require("nvconfig").ui.cmp
 M.base46 = {
-  theme = "eldritch",
+  theme = "gatekeeper",
 
   transparency = false,
   hl_override = {

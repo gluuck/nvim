@@ -6,6 +6,8 @@ return {
       require("base46").load_all_highlights()
     end,
   },
+  { "NvChad/colorify", enabled = false },
+  { "nvim-lualine/lualine.nvim" },
   { "rubocop/rubocop", cmd = "RuboCop" },
   { "kuntoaji/kakvim" },
   { "luochen1990/rainbow" },
@@ -54,10 +56,10 @@ return {
   { "Shougo/neco-vim" },
   { "Shougo/neco-syntax" },
   { "Keithbsmiley/rspec.vim" },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    event = "BufWritePre",
-  },
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   event = "BufWritePre",
+  -- },
   { "r7kamura/rubocop-slim" },
   { "nvim-neotest/nvim-nio" },
   { "nvim-lua/plenary.nvim" },
@@ -399,24 +401,24 @@ return {
       },
     },
   },
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      lsp = {
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
-        },
-      },
-      presets = {
-        bottom_search = true,
-        command_palette = true,
-        long_message_to_split = true,
-      },
-    },
-  },
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     lsp = {
+  --       override = {
+  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+  --         ["vim.lsp.util.stylize_markdown"] = true,
+  --         ["cmp.entry.get_documentation"] = true,
+  --       },
+  --     },
+  --     presets = {
+  --       bottom_search = true,
+  --       command_palette = true,
+  --       long_message_to_split = true,
+  --     },
+  --   },
+  -- },
   {
     "stevearc/dressing.nvim",
     event = "VeryLazy",
@@ -448,12 +450,12 @@ return {
   { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "nvim-tree/nvim-web-devicons" },
   {
     "lukas-reineke/indent-blankline.nvim",
-    version = "2.20.0",
+    version = "3.0.0", -- укажи нужную версию
     event = "VeryLazy",
     config = function()
       require("indent_blankline").setup {
-        show_current_context = true,
-        show_current_context_start = true,
+        context = true,
+        context_start = true,
       }
     end,
   },

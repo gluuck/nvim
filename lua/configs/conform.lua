@@ -3,7 +3,7 @@ local options = {
     lua = { "stylua" },
     css = { "prettierd" },
     html = { "prettierd" },
-    -- ruby = { "rubocop" },
+    ruby = { "rubocop" },
     javascript = { "prettierd" },
     typescript = { "prettierd" },
     javascriptreact = { "prettierd" },
@@ -11,16 +11,10 @@ local options = {
     eruby = { "erb_format" },
     sql = { "sleek" },
     go = { "gofmt" },
-    yaml = { "prettierd" },
-    yml = { "prettierd" },
-    slim = { "rubocop_slim" },
+    yaml = { "yamlfmt" },
+    vue = { "prettierd" },
   },
   formaters = {
-    rubocop_slim = {
-      command = "rubocop",
-      args = { "-A", "--stdin", "%" },
-      filetypes = { "ruby", "slim" },
-    },
     --   html_beautify = {
     --     command = "html-beautify",
     --     args = { "--type", "html", "erb", "slim", "--indent-size", "2" },
