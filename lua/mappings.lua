@@ -7,13 +7,18 @@ map("n", "<leader>w", "<cmd>w<CR>", { desc = "Save" })
 map("n", "<leader>cx", function()
   require("nvchad.tabufline").closeAllBufs()
 end, { desc = "Close All Buffers" })
+map("n", "<leader>e", "<cmd>Oil<CR>", { desc = "Open oil file explorer" })
+
+map("n", "<C-n>", "<cmd>Neotree toggle<CR>", { desc = "Toggle Neo-tree" })
 
 map("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Find Todo" })
-map("n", "\\", "<cmd>:vsplit <CR>", { desc = "Vertical Split" })
-map("n", "<c-l>", "<cmd>:TmuxNavigateRight<cr>", { desc = "Tmux Right" })
-map("n", "<c-h>", "<cmd>:TmuxNavigateLeft<cr>", { desc = "Tmux Left" })
-map("n", "<c-k>", "<cmd>:TmuxNavigateUp<cr>", { desc = "Tmux Up" })
-map("n", "<c-j>", "<cmd>:TmuxNavigateDown<cr>", { desc = "Tmux Down" })
+-- fzf-lua mappings are handled directly in the plugin configuration
+-- See the fzf-lua plugin config in lua/plugins/init.lua
+-- map("n", "\", "<cmd>vsplit<CR>", { desc = "Vertical Split" })
+map("n", "<c-l>", "<cmd>TmuxNavigateRight<cr>", { desc = "Tmux Right" })
+map("n", "<c-h>", "<cmd>TmuxNavigateLeft<cr>", { desc = "Tmux Left" })
+map("n", "<c-k>", "<cmd>TmuxNavigateUp<cr>", { desc = "Tmux Up" })
+map("n", "<c-j>", "<cmd>TmuxNavigateDown<cr>", { desc = "Tmux Down" })
 
 -- Trouble
 
@@ -29,7 +34,7 @@ map("n", "<leader>tt", function()
   require("neotest").run.run()
 end, { desc = "Run nearest test" })
 map("n", "<leader>tf", function()
-  require("neotest").run.run(vim.fn.expand "%")
+  require("neotest").run.run(vim.fn.expand "% ")
 end, { desc = "Run file test" })
 map("n", "<leader>to", ":Neotest output<CR>", { desc = "Show test output" })
 map("n", "<leader>ts", ":Neotest summary<CR>", { desc = "Show test summary" })
@@ -58,7 +63,7 @@ map("n", "<leader>gt", ":DiffviewToggleFile<CR>", { desc = "Git File History" })
 map("n", "<C-]>", function()
   require("nvchad.term").toggle { pos = "vsp", size = 0.4 }
 end, { desc = "Toogle Terminal Vertical" })
-map("n", "<C-\\>", function()
+map("n", '<C-">', function()
   require("nvchad.term").toggle { pos = "sp", size = 0.4 }
 end, { desc = "Toogle Terminal Horizontal" })
 map("n", "<C-f>", function()
@@ -67,7 +72,7 @@ end, { desc = "Toogle Terminal Float" })
 map("t", "<C-]>", function()
   require("nvchad.term").toggle { pos = "vsp" }
 end, { desc = "Toogle Terminal Vertical" })
-map("t", "<C-\\>", function()
+map("t", '<C-">', function()
   require("nvchad.term").toggle { pos = "sp" }
 end, { desc = "Toogle Terminal Horizontal" })
 map("t", "<C-f>", function()
@@ -84,3 +89,4 @@ map("i", "<C-g>", function()
   return vim.fn["codeium#Accept"]()
 end, { expr = true })
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+

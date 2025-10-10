@@ -15,74 +15,40 @@ local options = {
     vue = { "prettierd" },
   },
   formaters = {
-    --   html_beautify = {
-    --     command = "html-beautify",
-    --     args = { "--type", "html", "erb", "slim", "--indent-size", "2" },
-    --   },
-    -- sql_formatter = {
-    --   command = "sql-formatter",
-    --   args = { "--indent", "2" },
-    --   on_unavailable = "skip",
-    -- },
-    -- sqlfmt = {
-    --   command = "sqlfmt",
-    --   args = { "--indent", "2" },
-    -- },
-    --   prettierd = {
-    --     command = "prettierd",
-    --     args = { "--stdin-filepath", "$FILENAME" },
-    --   },
-    --   rubocop = {
-    --     command = "rubocop",
-    --     args = {
-    --       "--server",
-    --       "-a",
-    --       "-f",
-    --       "quiet",
-    --       "--stderr",
-    --       "--stdin",
-    --       "$FILENAME",
-    --       "--auto-correct",
-    --       "--format",
-    --       "p",
-    --       "--out",
-    --       "$FILENAME",
-    --       "--stdin-filename",
-    --       "$FILENAME",
-    --       "--display-cop-names",
-    --       "--stdin",
-    --       "--format",
-    --       "p",
-    --       "--out",
-    --       "$FILENAME",
-    --       "--stdin-filename",
-    --     },
-    --     exit_codes = { 0, 1 },
-    --   },
-    --   stylua = {
-    --     command = "stylua",
-    --     args = { "--stdin" },
-    --   },
-    --   rubyfmt = {
-    --     command = "rubyfmt",
-    --     args = { "--stdin", "--fix", "--verbose", "--format", "--singlequote" },
-    --
-    --   },
-    --   rufo = {
-    --     command = "rufo",
-    --     args = { "--stdin", "--fix", "--verbose", "--format", "--singlequote" },
-    --   },
-    --   gofmt = {
-    --     command = "gofmt",
-    --     args = { "-w", "$FILENAME" },
-    --   }
-    --   -- standardrb = { args = { "--stdin", "--fix", "--verbose", "--format", "--singlequote" } },
+    prettierd = {
+      command = "prettierd",
+      args = { "--stdin-filepath", "$FILENAME" },
+    },
+    rubocop = {
+      command = "rubocop",
+      args = {
+        "--autocorrect-all",
+        "--format",
+        "progress",
+        "--stdin",
+        "$FILENAME",
+      },
+      exit_codes = { 0, 1 },
+    },
+    stylua = {
+      command = "stylua",
+      args = { "--stdin" },
+    },
+    gofmt = {
+      command = "gofmt",
+      args = { "-w", "$FILENAME" },
+    }
   },
-  --
   format_on_save = {
-    -- These options will be passed to conform.format()
     timeout_ms = 5000,
     lsp_fallback = true,
+    on_format = function(bufnr)
+      local conform = require("conform")
+      local formatters = conform.get_formatters(bufnr)
+      if #formatters > 0 then
+        vim.notify("Formatted with: " .. table.concat(formatters, ", "), vim.log.levels.INFO, { title = "Conform" })
+      end
+    end,
   },
 }
 

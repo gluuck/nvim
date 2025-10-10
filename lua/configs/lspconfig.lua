@@ -1,31 +1,27 @@
 -- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
+local nvlsp = require "nvchad.configs.lspconfig"
 
 -- EXAMPLE
 local servers = {
   "html",
   "cssls",
-  "rubocop",
-  "ruby_lsp",
-  "tailwindcss",
   "ts_ls",
   "eslint",
-  "gopls",
 }
-local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+for _, server in ipairs(servers) do
+  vim.lsp.config(server, {
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
-  }
+  })
+  vim.lsp.enable(server)
 end
 
-lspconfig.gopls.setup {
+vim.lsp.config("gopls", {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
@@ -37,28 +33,32 @@ lspconfig.gopls.setup {
       staticcheck = true,
     },
   },
-}
+})
+vim.lsp.enable("gopls")
 
-lspconfig.ruby_lsp.setup {
+vim.lsp.config("ruby_lsp", {
   command = { "bundle", "exec", "ruby-lsp" },
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
-}
+})
+vim.lsp.enable("ruby_lsp")
 
--- lspconfig.solargraph.setup {
+-- vim.lsp.config("solargraph", {
 --   on_attach = nvlsp.on_attach,
 --   on_init = nvlsp.on_init,
 --   capabilities = nvlsp.capabilities,
--- }
+-- })
+-- vim.lsp.enable("solargraph")
 
-lspconfig.rubocop.setup {
+vim.lsp.config("rubocop", {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
-}
+})
+vim.lsp.enable("rubocop")
 
-lspconfig.tailwindcss.setup {
+vim.lsp.config("tailwindcss", {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
@@ -94,4 +94,5 @@ lspconfig.tailwindcss.setup {
       validate = true,
     },
   },
-}
+})
+vim.lsp.enable("tailwindcss")

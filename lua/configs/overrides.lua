@@ -86,9 +86,9 @@ M.nvimtree = {
   },
   filters = {
     custom = {
-      "^\\.git$",
+      "^\.git$",
     },
-    dotfiles = true,
+    dotfiles = false,
   },
   renderer = {
     highlight_git = true,

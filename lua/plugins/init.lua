@@ -1,4 +1,5 @@
 return {
+  { import = "nvchad.blink.lazyspec" },
   {
     "nvchad/base46",
     lazy = true,
@@ -60,9 +61,10 @@ return {
   --   "jose-elias-alvarez/null-ls.nvim",
   --   event = "BufWritePre",
   -- },
-  { "r7kamura/rubocop-slim" },
+
   { "nvim-neotest/nvim-nio" },
   { "nvim-lua/plenary.nvim" },
+  { "stevearc/oil.nvim" },
   { "nvim-treesitter/nvim-treesitter" },
   { "williamboman/nvim-lsp-installer" },
   {
@@ -85,12 +87,61 @@ return {
       table.insert(opts.sources, { name = "buffer" })
     end,
   },
-  { "mfussenegger/nvim-dap" },
-  { "rcarriga/nvim-dap-ui" },
   { "nvim-telescope/telescope.nvim" },
   { "nvim-telescope/telescope-file-browser.nvim" },
   { "nvim-telescope/telescope-media-files.nvim" },
   { "nvim-telescope/telescope-ui-select.nvim" },
+  {
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("fzf-lua").setup {
+        -- Настройка внешнего вида
+        fzf_opts = {
+          ["--layout"] = "reverse",
+          ["--height"] = "90%",
+          ["--info"] = "inline",
+          ["--border"] = "rounded",
+          ["--prompt"] = "🔍 ",
+          ["--pointer"] = "▶",
+          ["--marker"] = "✓",
+        },
+        -- Настройка цветов
+        color_icons = true,
+        winopts = {
+          height = 0.9,
+          width = 0.9,
+          row = 0.40,
+          col = 0.50,
+          preview = {
+            default = "bat",
+            layout = "vertical",
+            vertical = "up:65%",
+            delay = 50,
+            winopts = {
+              number = false,
+              relativenumber = false,
+            },
+          },
+        },
+        -- Настройка файловых команд
+        files = {
+          prompt = " 🐢 ",
+          cmd = "find . -type f -not -path '*/\\.git/*' | sed 's/^..//' ",
+        },
+        grep = {
+          prompt = " 🔎 ",
+          rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=400",
+        },
+      }
+    end,
+    keys = {
+      { "<leader>ff", "<cmd>lua require('fzf-lua').files()<CR>", desc = "Find Files (fzf-lua)" },
+      { "<leader>fg", "<cmd>lua require('fzf-lua').live_grep_native()<CR>", desc = "Find Text in Files (fzf-lua)" },
+      { "<leader>fb", "<cmd>lua require('fzf-lua').buffers()<CR>", desc = "Find Buffers (fzf-lua)" },
+      { "<leader>fh", "<cmd>lua require('fzf-lua').oldfiles()<CR>", desc = "Search History (fzf-lua)" },
+    },
+  },
   { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
   { "nvim-telescope/telescope-fzy-native.nvim" },
   { "nvim-telescope/telescope-symbols.nvim" },
@@ -129,6 +180,27 @@ return {
       if not ok then
         return
       end
+
+      require("dap-ruby").setup()
+
+      dap.adapters.go = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = "dlv",
+          args = { "dap", "-l", "127.0.0.1:${port}" },
+        },
+      }
+
+      dap.configurations.go = {
+        {
+          type = "go",
+          name = "Debug",
+          request = "launch",
+          program = "${fileDirname}",
+        },
+      }
+
       dap.configurations.typescript = {
         {
           type = "node2",
@@ -148,6 +220,7 @@ return {
     end,
     dependencies = {
       "mxsdev/nvim-dap-vscode-js",
+      "suketa/nvim-dap-ruby",
     },
   },
   {
@@ -208,86 +281,6 @@ return {
   },
 
   {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "lua",
-        "vimdoc",
-        "html",
-        "css",
-        "ruby",
-        "go",
-        "sql",
-        "javascript",
-        "typescript",
-        "json",
-        "jsonc",
-        "toml",
-        "yaml",
-        "markdown",
-        "markdown_inline",
-      },
-    },
-    highlight = {
-      enable = true, -- Включить подсветку
-      additional_vim_regex_highlighting = true,
-    },
-  },
-  {
-    "nvim-neotest/nvim-nio",
-  },
-  {
-    "mfussenegger/nvim-dap",
-    config = function()
-      local ok, dap = pcall(require, "dap")
-      if not ok then
-        return
-      end
-      dap.configurations.typescript = {
-        {
-          type = "node2",
-          name = "node attach",
-          request = "attach",
-          program = "${file}",
-          cwd = vim.fn.getcwd(),
-          sourceMaps = true,
-          protocol = "inspector",
-        },
-      }
-      dap.adapters.node2 = {
-        type = "executable",
-        command = "node-debug2-adapter",
-        args = {},
-      }
-    end,
-    dependencies = {
-      "mxsdev/nvim-dap-vscode-js",
-    },
-  },
-  {
-    "rcarriga/nvim-dap-ui",
-    config = function()
-      require("dapui").setup()
-
-      local dap, dapui = require "dap", require "dapui"
-
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open {}
-      end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close {}
-      end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close {}
-      end
-    end,
-    dependencies = {
-      "mfussenegger/nvim-dap",
-    },
-  },
-  {
     "Exafunction/codeium.vim",
     lazy = false,
   },
@@ -343,17 +336,7 @@ return {
       require("mini.ai").setup(opts)
     end,
   },
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      plugins = {
-        presets = {
-          operators = false,
-        },
-      },
-    },
-  },
+
   {
     "folke/flash.nvim",
     event = "VeryLazy",
@@ -401,24 +384,25 @@ return {
       },
     },
   },
-  -- {
-  --   "folke/noice.nvim",
-  --   event = "VeryLazy",
-  --   opts = {
-  --     lsp = {
-  --       override = {
-  --         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-  --         ["vim.lsp.util.stylize_markdown"] = true,
-  --         ["cmp.entry.get_documentation"] = true,
-  --       },
-  --     },
-  --     presets = {
-  --       bottom_search = true,
-  --       command_palette = true,
-  --       long_message_to_split = true,
-  --     },
-  --   },
-  -- },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+      },
+      presets = {
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
+      },
+    },
+  },
   {
     "stevearc/dressing.nvim",
     event = "VeryLazy",
@@ -434,30 +418,80 @@ return {
     event = "VeryLazy",
     opts = {},
   },
+
   {
-    "folke/noice.nvim",
-    event = "VeryLazy",
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    },
+    cmd = { "Neotree" },
     opts = {
-      lsp = {
-        override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
+      sources = { "filesystem", "buffers", "git_status" },
+      source_selector = {
+        winbar = true,
+        statusline = false,
+      },
+      filesystem = {
+        filtered_items = {
+          hide_dotfiles = false,
+          hide_gitignore = false,
+          hide_by_name = {
+            -- ".git",  -- uncomment to hide .git directory
+          },
+          always_show = { -- Show all these files even if they are ignored
+            ".env",
+            ".env.local",
+            ".env.development",
+            ".env.production",
+            ".env.test",
+            ".gitignore",
+            ".gitconfig",
+            ".bashrc",
+            ".zshrc",
+            ".vimrc",
+            ".config",
+            "node_modules",
+            ".bundle",
+          },
+          always_show_by_filetype = {
+            ".env",
+            ".gitconfig",
+            "gitignore",
+            "config",
+            "bashrc",
+            "zshrc",
+          },
+          never_show = { -- remains hidden even if `show_hidden` is true
+            --".git", -- if you want to hide .git folder completely
+          },
+          never_show_by_filetype = {
+            --"jpg", "png", "gif", -- example filetypes that would be hidden
+          },
+        },
+        follow_current_file = {
+          enabled = true,
+        },
+      },
+      window = {
+        width = 30,
+        mappings = {
+          ["<space>"] = "none", -- Disable space key
+          ["H"] = "toggle_hidden", -- Toggle hidden files visibility
         },
       },
     },
+    keys = {
+      { "<C-n>", "<cmd>Neotree toggle<CR>", desc = "Toggle Neo-tree" },
+    },
   },
-  { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "nvim-tree/nvim-web-devicons" },
+
   {
     "lukas-reineke/indent-blankline.nvim",
-    version = "3.0.0", -- укажи нужную версию
-    event = "VeryLazy",
-    config = function()
-      require("indent_blankline").setup {
-        context = true,
-        context_start = true,
-      }
-    end,
+    main = "ibl",
+    opts = {},
   },
 
   -- Indent animations
@@ -482,13 +516,13 @@ return {
       autocompletion = {
         complete = true,
       },
-      require("cmp").setup {
-        sources = {
-          { name = "buffer" }, -- Для автозавершения из буфера
-          { name = "path" }, -- Для автозавершения путей
-          -- другие источники при необходимости
-        },
-      },
+      -- require("cmp").setup {
+      --   sources = {
+      --     { name = "buffer" }, -- Для автозавершения из буфера
+      --     { name = "path" }, -- Для автозавершения путей
+      --     -- другие источники при необходимости
+      --   },
+      -- },
     },
     config = function(_, opts)
       require("tailwindcss-colors").setup(opts)
@@ -692,73 +726,12 @@ return {
   },
   {
     "folke/todo-comments.nvim",
+    event = "FileType",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {
-      {
-        signs = true, -- show icons in the signs column
-        sign_priority = 8, -- sign priority
-        -- keywords recognized as todo comments
-        keywords = {
-          FIX = {
-            icon = " ", -- icon used for the sign, and in search results
-            color = "error", -- can be a hex color, or a named color (see below)
-            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-            -- signs = false, -- configure signs for some keywords individually
-          },
-          TODO = { icon = " ", color = "info" },
-          HACK = { icon = " ", color = "warning" },
-          WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-          NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-          TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-        },
-        gui_style = {
-          fg = "NONE", -- The gui style to use for the fg highlight group.
-          bg = "BOLD", -- The gui style to use for the bg highlight group.
-        },
-        merge_keywords = true, -- when true, custom keywords will be merged with the defaults
-        -- highlighting of the line containing the todo comment
-        -- * before: highlights before the keyword (typically comment characters)
-        -- * keyword: highlights of the keyword
-        -- * after: highlights after the keyword (todo text)
-        highlight = {
-          multiline = true, -- enable multine todo comments
-          multiline_pattern = "^.", -- lua pattern to match the next multiline from the start of the matched keyword
-          multiline_context = 10, -- extra lines that will be re-evaluated when changing a line
-          before = "", -- "fg" or "bg" or empty
-          keyword = "wide", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
-          after = "fg", -- "fg" or "bg" or empty
-          pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlighting (vim regex)
-          comments_only = true, -- uses treesitter to match keywords in comments only
-          max_line_len = 400, -- ignore lines longer than this
-          exclude = {}, -- list of file types to exclude highlighting
-        },
-        -- list of named colors where we try to extract the guifg from the
-        -- list of highlight groups or use the hex color if hl not found as a fallback
-        colors = {
-          error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-          warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
-          info = { "DiagnosticInfo", "#2563EB" },
-          hint = { "DiagnosticHint", "#10B981" },
-          default = { "Identifier", "#7C3AED" },
-          test = { "Identifier", "#FF00FF" },
-        },
-        search = {
-          command = "rg",
-          args = {
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-          },
-          -- regex that will be used to match keywords.
-          -- don't replace the (KEYWORDS) placeholder
-          pattern = [[\b(KEYWORDS):]], -- ripgrep regex
-          -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
-        },
-      },
-    },
+    opts = require "configs.todo-comments",
+    config = function()
+      require "configs.todo-comments-autocmd"
+    end,
   },
   { "nvzone/volt", lazy = true },
 

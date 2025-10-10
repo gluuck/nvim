@@ -1,7 +1,7 @@
 local M = {}
 local cmp_ui = require("nvconfig").ui.cmp
 M.base46 = {
-  theme = "gatekeeper",
+  theme = "eldritch",
 
   transparency = false,
   hl_override = {
@@ -63,4 +63,16 @@ M.base46 = {
     },
   },
 }
+
+M.plugins = {
+  ["nvim-treesitter/nvim-treesitter"] = {
+    config = function(_, opts)
+      require("nvim-treesitter").setup(opts)
+    end,
+  },
+  ["nvim-tree/nvim-tree.lua"] = {
+    enabled = false,
+  },
+}
+
 return M

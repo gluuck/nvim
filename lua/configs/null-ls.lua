@@ -24,6 +24,8 @@ null_ls.setup {
     b.formatting.erb_format.with { filetypes = { "eruby" } },
 
     b.formatting.gofmt.with { filetypes = { "go" } },
+    -- Python
+    b.formatting.yapf.with { filetypes = { "python" } },
 
     -- Lua
     b.formatting.stylua,
